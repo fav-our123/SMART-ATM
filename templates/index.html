@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Smartsight Bank ATM</title>
+    <script src="{{ url_for('static', filename='audio.js') }}"></script>
+</head>
+<body>
+<main>
+    <h1 id="welcome-header">Welcome to Smartsight Bank</h1>
+    <p id="welcome-prompt">Please click the Start button to begin your session.</p>
+
+    <form action="/biometric" method="get">
+        <button type="submit" id="start-btn" aria-label="Start ATM session">Start</button>
+    </form>
+</main>
+
+<script>
+window.onload = () => {
+    speakSequence([
+        "Welcome to Smartsight Bank.",
+        "Please sit still and follow the instructions.",
+        "Click Start to begin your ATM session."
+    ]);
+};
+</script>
+
+</body>
+</html>

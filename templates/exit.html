@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Session End</title>
+    <script src="{{ url_for('static', filename='audio.js') }}"></script>
+</head>
+<body>
+<main>
+    <h1 id="end-header">Session End</h1>
+    <p id="end-message">Thank you for using Smartsight Bank ATM. Please remove your card.</p>
+
+    <form action="/" method="get">
+        <button type="submit" id="restart-btn" aria-label="Restart ATM session">Restart</button>
+    </form>
+</main>
+
+<script>
+window.onload = () => {
+    speakSequence([
+        "Thank you for using Smartsight Bank.",
+        "Please remove your card.",
+        "Press Restart to begin a new session."
+    ]);
+};
+
+document.getElementById("restart-btn").addEventListener("click", () => {
+    speak("Restarting ATM session");
+});
+
+</script>
+</body>
+</html>

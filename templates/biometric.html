@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Biometric Verification</title>
+    <script src="{{ url_for('static', filename='audio.js') }}"></script>
+    <script src="{{ url_for('static', filename='biometric.js') }}"></script>
+    <style>
+        #camera-preview {
+            width: 320px;
+            height: 240px;
+            border: 1px solid #333;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+<main>
+    <h1 id="biometric-header">Biometric Verification</h1>
+    <p id="biometric-instruction">Please allow access to your camera and follow the instructions.</p>
+
+    <!-- Camera preview -->
+    <video id="camera-preview" autoplay muted></video>
+
+    <!-- Simulated pass/fail buttons -->
+    <form action="/card" method="get">
+        <button type="button" id="verify-btn" aria-label="Verify biometric">Verify</button>
+        <button type="submit" id="fail-btn" aria-label="Fail verification">Fail</button>
+    </form>
+</main>
+
+<script>
+    // Speak page content automatically
+    window.onload = function() {
+        speakSequence([
+
+            "Please sit still and position your face in front of the camera",
+            "Click verify when ready to continue."
+        ]);
+    };
+
+    // Initialize camera on page load
+    initCamera("camera-preview");
+
+    // Speak when verify button is clicked
+    document.getElementById("verify-btn").addEventListener("click", function() {
+        speak("Biometric verification passed. Redirecting to card entry.");
+        setTimeout(() => {
+            window.location.href = "/card";
+        }, 2500); // give time for TTS to finish
+    });
+
+    // Speak when fail button is clicked
+    document.getElementById("fail-btn").addEventListener("click", function() {
+        speak("Biometric verification failed. Returning to welcome page.");
+    });
+</script>
+</body>
+</html>

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Main Menu</title>
+    <script src="{{ url_for('static', filename='audio.js') }}"></script>
+    <style>.hidden { display: none; }</style>
+</head>
+<body>
+<main>
+    <h1 id="menu-header">Main Menu</h1>
+    <p id="menu-error" class="{% if not error %}hidden{% endif %}" style="color:red;" aria-live="polite">
+        {{ error if error else '' }}
+    </p>
+
+    <form id="menu-form" action="/menu" method="post">
+    <label><input type="radio" name="choice" value="1"> Balance Inquiry</label><br>
+    <label><input type="radio" name="choice" value="2"> Withdraw Cash</label><br>
+    <label><input type="radio" name="choice" value="3"> Exit</label><br>
+    <button type="submit">Submit</button>
+</form>
+
+</main>
+
+<script>
+window.onload = () => {
+    speakSequence([
+        { id: "menu-header" },
+        { text: "Main menu. Press 1 for Balance, 2 for Withdrawal, 3 to Exit." },
+        { id: "menu-error" } // Speak error if present
+    ]);
+
+    // Keyboard shortcuts: 1, 2, 3 select radio buttons
+    document.addEventListener("keydown", function(event) {
+        if (event.key === "1") {
+            document.querySelector('input[name="choice"][value="1"]').checked = true;
+        } else if (event.key === "2") {
+            document.querySelector('input[name="choice"][value="2"]').checked = true;
+        } else if (event.key === "3") {
+            document.querySelector('input[name="choice"][value="3"]').checked = true;
+        } else if (event.key === "Enter") {
+            document.getElementById("menu-submit-btn").click();
+        }
+    });
+
+    // Speak when submit button is clicked
+    document.getElementById("menu-submit-btn").addEventListener("click", function() {
+        speak("Submitting menu choice");
+    });
+};
+</script>
+</body>
+</html>
