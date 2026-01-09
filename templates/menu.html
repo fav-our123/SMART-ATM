@@ -14,24 +14,25 @@
     </p>
 
     <form id="menu-form" action="/menu" method="post">
-    <label><input type="radio" name="choice" value="1"> Balance Inquiry</label><br>
-    <label><input type="radio" name="choice" value="2"> Withdraw Cash</label><br>
-    <label><input type="radio" name="choice" value="3"> Exit</label><br>
-    <button type="submit">Submit</button>
-</form>
-
+        <label><input type="radio" name="choice" value="1"> Balance Inquiry</label><br>
+        <label><input type="radio" name="choice" value="2"> Withdraw Cash</label><br>
+        <label><input type="radio" name="choice" value="3"> Exit</label><br>
+        <button type="submit" id="menu-submit-btn">Submit</button>
+    </form>
 </main>
 
 <script>
 window.onload = () => {
+    // Speak sequence: header, instructions, then error if present
     speakSequence([
         { id: "menu-header" },
         { text: "Main menu. Press 1 for Balance, 2 for Withdrawal, 3 to Exit." },
-        { id: "menu-error" } // Speak error if present
+        { id: "menu-error" }
     ]);
 
-    // Keyboard shortcuts: 1, 2, 3 select radio buttons
+    // Keyboard shortcuts for 1,2,3
     document.addEventListener("keydown", function(event) {
+        const form = document.getElementById("menu-form");
         if (event.key === "1") {
             document.querySelector('input[name="choice"][value="1"]').checked = true;
         } else if (event.key === "2") {
@@ -39,7 +40,7 @@ window.onload = () => {
         } else if (event.key === "3") {
             document.querySelector('input[name="choice"][value="3"]').checked = true;
         } else if (event.key === "Enter") {
-            document.getElementById("menu-submit-btn").click();
+            form.submit(); // directly submit the form
         }
     });
 
